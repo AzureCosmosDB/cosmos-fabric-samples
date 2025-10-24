@@ -1,16 +1,19 @@
+<!--
 ---
 page_type: sample
 languages:
 - python
+- nosql
 products:
-- azure-cosmos-db
+- fabric
 name: |
-  Simple Query Samples for Cosmos DB in Fabric
-urlFragment: simple-query-samples
-description: Review this example of writing queries using Cosmos DB in Fabric Notebooks.
+  Simple Query Samples for Cosmos DB in Microsoft Fabric
+urlFragment: demo
+description: Learn Cosmos DB query operations in Microsoft Fabric: connect, authenticate, and perform CRUD operations on product data with reviews.
 ---
+-->
 
-# Simple Query Samples for Cosmos DB in Fabric
+# Simple Query Samples for Cosmos DB in Microosoft Fabric
 
 This sample demonstrates fundamental query operations in Cosmos DB using Microsoft Fabric. You'll learn how to connect, authenticate, and perform basic CRUD operations on a product catalog dataset with customer reviews.
 
