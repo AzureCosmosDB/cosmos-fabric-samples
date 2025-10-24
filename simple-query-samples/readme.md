@@ -8,7 +8,7 @@ products:
 - fabric
 name: |
   Simple Query Samples for Cosmos DB in Microsoft Fabric
-urlFragment: demo
+urlFragment: simple-query-samples
 description: Learn Cosmos DB query operations in Microsoft Fabric: connect, authenticate, and perform CRUD operations on product data with reviews.
 ---
 -->
