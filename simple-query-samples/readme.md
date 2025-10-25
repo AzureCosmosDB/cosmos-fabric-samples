@@ -29,11 +29,13 @@ This sample demonstrates fundamental query operations in Cosmos DB using Microso
 ## 🗂️ Sample Dataset
 
 This notebook uses the **SampleData** dataset which contains:
+
 - **Product Catalog** - Technology products with pricing, inventory, and descriptions
 - **Customer Reviews** - Reviews associated with products
 - **Co-located Design** - Products and reviews share the same partition key (`categoryName`)
 
 ### Sample Data Structure
+
 ```json
 {
   "docType": "product",
@@ -50,10 +52,12 @@ This notebook uses the **SampleData** dataset which contains:
 ## 🚀 Getting Started
 
 ### Prerequisites
-- Microsoft Fabric workspace with Cosmos DB enabled
+
+- Microsoft Fabric workspace
 - Sample data loaded in your Cosmos DB container
 
 ### Step 1: Load Sample Data in Fabric
+
 1. **Open Microsoft Fabric** - Navigate to your workspace
 2. **Create Cosmos DB artifact** - Click "New" → "Cosmos DB"
 3. **Load sample data**:
@@ -64,21 +68,26 @@ This notebook uses the **SampleData** dataset which contains:
 ### Step 2: Download and Import the Notebook
 
 #### Option A: Download from GitHub
+
 1. **Download the notebook**:
    - Click on `Simple Query Samples.ipynb` in this folder
    - Click the "Download" button or "Raw" and save the file
 2. **Import into Fabric**:
-   - In your Fabric workspace, click "New" → "Notebook"
-   - Click "Upload" and select the downloaded `.ipynb` file
+   - In your Fabric workspace, click **"Import"** → **"Notebook"**
+   - Select the downloaded `.ipynb` file and upload
 
 #### Option B: Clone the Repository
+
 1. **Clone this repository** to your local machine:
+
    ```bash
-   git clone https://github.com/markjbrown/cosmos-fabric-samples.git
+   git clone https://github.com/azurecosmosdb/cosmos-fabric-samples.git
    ```
+
 2. **Import the notebook**:
-   - Navigate to the `Simple Query Samples` folder
-   - In Fabric, upload the `Simple Query Samples.ipynb` file
+   - Navigate to the `simple-query-samples` folder
+   - In your Fabric workspace, click **"Import"** → **"Notebook"**
+   - Select and upload the `Simple Query Samples.ipynb` file
 
 ### Step 3: Configure the Notebook
 
@@ -101,8 +110,9 @@ This notebook uses the **SampleData** dataset which contains:
    - Run the first few cells to install dependencies
 
 **Example configuration:**
+
 ```python
-COSMOS_ENDPOINT = 'https://your-fabric-workspace.documents.azure.com:443/'
+COSMOS_ENDPOINT = 'https://my-cosmos-endpoint.cosmos.fabric.microsoft.com:443/'
 COSMOS_DATABASE_NAME = 'my-cosmos-artifact'
 COSMOS_CONTAINER_NAME = 'SampleData'
 ```
@@ -110,38 +120,49 @@ COSMOS_CONTAINER_NAME = 'SampleData'
 ## 📖 Notebook Walkthrough
 
 ### Cell 1: Introduction and Overview
+
 Markdown cell explaining the sample's purpose and features.
 
 ### Cell 2: Package Installation
+
 ```python
 %pip install azure-cosmos
 ```
+
 Installs the Azure Cosmos DB Python SDK.
 
 ### Cell 3: Imports and Configuration
+
 Sets up imports and connection variables for your Cosmos DB instance.
 
 ### Cell 4: Authentication Setup
+
 Implements `FabricTokenCredential` for seamless authentication in Microsoft Fabric.
 
 ### Cell 5: Database and Container Connection
+
 Establishes connection to your Cosmos DB database and container.
 
 ### Cell 6: Product Search Function
+
 Demonstrates parameterized queries to search products by category with ordering and limiting.
 
 ### Cell 7: Execute Product Search
+
 Runs the search function and displays results in JSON format.
 
 ### Cell 8: Product and Reviews Function
+
 Shows how to query for a specific product and all its associated reviews.
 
 ### Cell 9: Execute Product and Reviews Query
+
 Retrieves a product with its reviews and displays the results.
 
 ## 💡 Key Concepts Demonstrated
 
 ### 1. Fabric Authentication
+
 ```python
 class FabricTokenCredential(TokenCredential):
     def get_token(self, *scopes: str, **kwargs) -> AccessToken:
@@ -150,6 +171,7 @@ class FabricTokenCredential(TokenCredential):
 ```
 
 ### 2. Parameterized Queries
+
 ```python
 query = """
     SELECT c.name, c.currentPrice 
@@ -164,25 +186,30 @@ parameters = [
 ```
 
 ### 3. Async Operations
+
 All database operations use async/await patterns for optimal performance in Fabric notebooks.
 
 ## 🔧 Troubleshooting
 
 ### Common Issues
 
-**Authentication Errors**
-- Ensure you're running the notebook in Microsoft Fabric
-- Verify your workspace has Cosmos DB enabled
+#### Authentication Errors
 
-**Container Not Found**
+- Ensure you're running the notebook in Microsoft Fabric
+- Verify you have access to your Cosmos DB artifact
+
+#### Container Not Found
+
 - Confirm you've loaded the SampleData using the Cosmos DB Data Explorer
 - Check that `COSMOS_CONTAINER_NAME = 'SampleData'` matches your container name
 
-**No Results Returned**
+#### No Results Returned
+
 - Verify sample data was loaded correctly
 - Check that category names match exactly (case-sensitive)
 
-**Package Installation Issues**
+#### Package Installation Issues
+
 - Re-run the `%pip install azure-cosmos` cell
 - Restart the kernel if packages don't load properly
 
@@ -190,17 +217,14 @@ All database operations use async/await patterns for optimal performance in Fabr
 
 After completing this sample, consider exploring:
 
-- **Advanced Query Patterns** - Aggregations, joins, and complex filtering
 - **Vector Search Samples** - AI-powered similarity search
-- **Performance Optimization** - Indexing strategies and query tuning
-- **Real-time Processing** - Change feed patterns
+- **Management Tasks** - Creating indexes and containers and changing throughput
 
 ## 📚 Additional Resources
 
-- [Cosmos DB SQL Query Reference](https://docs.microsoft.com/azure/cosmos-db/sql-query-getting-started)
-- [Python SDK Documentation](https://docs.microsoft.com/python/api/azure-cosmos/)
-- [Fabric Notebooks Documentation](https://docs.microsoft.com/fabric/data-engineering/how-to-use-notebook)
-- [Cosmos DB Best Practices](https://docs.microsoft.com/azure/cosmos-db/performance-tips)
+- [Cosmos DB SQL Query Reference](https://learn.microsoft.com/nosql/query/overview?context=%2Ffabric%2Fcontext%2Fcontext-database)
+- [Python SDK API Documentation](https://docs.microsoft.com/python/api/azure-cosmos/)
+- [Quickstart: Cosmos DB in Fabric](https://learn.microsoft.com/fabric/database/cosmos-db/quickstart-portal)
 
 ## 🤝 Contributing
 
