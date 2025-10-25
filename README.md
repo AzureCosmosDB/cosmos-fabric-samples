@@ -29,7 +29,9 @@ New to Cosmos DB in Fabric? Start here:
 
 | Sample | Description | Prerequisites | Difficulty |
 |--------|-------------|---------------|------------|
-| [Simple Query Samples](./Simple%20Query%20Samples/) | Basic CRUD operations and queries using the sample dataset | SampleData container | Beginner |
+| [Simple Query Samples](./simple-query-samples/) | Basic CRUD operations and queries using the sample dataset | SampleData container | Beginner |
+| [Vector Search Sample](./vector-search-sample/) | AI-powered semantic search using OpenAI embeddings and VectorDistance | SampleVectorData container | Intermediate |
+| [Management Operations Sample](./management-samples/) | Container management, throughput operations, and robust data loading with retry logic | Empty Cosmos DB artifact | Advanced |
 
 ### 📊 Datasets
 
@@ -51,7 +53,7 @@ New to Cosmos DB in Fabric? Start here:
 
 Before running the samples, ensure you have:
 
-- **Microsoft Fabric workspace** with Cosmos DB enabled
+- **Microsoft Fabric workspace**
 - **Python 3.8+** for notebook samples
 - **Azure Cosmos SDK** (`pip install azure-cosmos`)
 - **Sample data loaded** in your Cosmos DB container (use Data Explorer)
