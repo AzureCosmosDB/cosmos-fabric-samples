@@ -7,13 +7,13 @@ languages:
 products:
 - fabric
 name: |
-  Management Operations Sample for Cosmos DB in Microsoft Fabric
-urlFragment: management-samples
+  Management Operations for Cosmos DB in Microsoft Fabric
+urlFragment: management
 description: Learn container management operations in Cosmos DB using Microsoft Fabric: create containers with indexing/vector policies, manage throughput, and implement reliable data loading with retry logic.
 ---
 -->
 
-# Management Operations Sample for Cosmos DB in Fabric
+# Management Operations for Cosmos DB in Fabric
 
 This sample demonstrates **container management operations** in Cosmos DB using Microsoft Fabric. Learn how to programmatically create containers with custom policies, manage throughput settings, and implement robust data loading patterns with retry logic for production scenarios.
 
@@ -102,7 +102,7 @@ indexing_policy = {
 #### Option A: Download from GitHub
 
 1. **Download the notebook**:
-   - Click on `management-samples.ipynb` in this folder
+   - Click on `management.ipynb` in this folder
    - Click the "Download" button or "Raw" and save the file
 2. **Import into Fabric**:
    - In your Fabric workspace, click **"Import"** → **"Notebook"**
@@ -117,9 +117,9 @@ indexing_policy = {
    ```
 
 2. **Import the notebook**:
-   - Navigate to the `management-samples` folder
+   - Navigate to the `management` folder
    - In your Fabric workspace, click **"Import"** → **"Notebook"**
-   - Select and upload the `management-samples.ipynb` file
+   - Select and upload the `management.ipynb` file
 
 ### Step 3: Configure the Notebook
 

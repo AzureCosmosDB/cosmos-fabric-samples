@@ -3,17 +3,16 @@
 page_type: sample
 languages:
 - python
-- nosql
 products:
 - fabric
 name: |
-  Vector Search Sample for Cosmos DB in Microsoft Fabric
-urlFragment: vector-search-sample
+  Vector Search for Cosmos DB in Microsoft Fabric
+urlFragment: vector-search
 description: Learn AI-powered vector search in Cosmos DB using Microsoft Fabric's built-in OpenAI text embedding models for semantic similarity searches.
 ---
 -->
 
-# Vector Search Sample for Cosmos DB in Fabric
+# Vector Search for Cosmos DB in Fabric
 
 This sample demonstrates **AI-powered vector search** capabilities in Cosmos DB using Microsoft Fabric's built-in OpenAI text embedding models. Learn how to perform semantic similarity searches on product catalogs using natural language queries.
 
@@ -87,7 +86,7 @@ This notebook uses the **SampleVectorData** dataset which contains:
 #### Option A: Download from GitHub
 
 1. **Download the notebook**:
-   - Click on `vector-search-sample.ipynb` in this folder
+   - Click on `vector-search.ipynb` in this folder
    - Click the "Download" button or "Raw" and save the file
 2. **Import into Fabric**:
    - In your Fabric workspace, click **"Import"** → **"Notebook"**
@@ -102,9 +101,9 @@ This notebook uses the **SampleVectorData** dataset which contains:
    ```
 
 2. **Import the notebook**:
-   - Navigate to the `vector-search-sample` folder
+   - Navigate to the `vector-search` folder
    - In your Fabric workspace, click **"Import"** → **"Notebook"**
-   - Select and upload the `vector-search-sample.ipynb` file
+   - Select and upload the `vector-search.ipynb` file
 
 ### Step 3: Configure the Notebook
 
@@ -252,8 +251,8 @@ products = await search_products("work from home setup", similarity=0.7, limit=1
 
 After completing this sample, explore:
 
-- **Custom Vector Embedding Models** - Vector search using newer embedding models from OpenAI in Azure
-- **Advanced Search Patterns** - Vector and full-text search, hybrid queries
+- **Advanced Vector Search** - Enterprise-grade vector search with Azure OpenAI deployment and Key Vault
+- **Management Operations** - Container management and production patterns
 
 ## 📚 Additional Resources
 

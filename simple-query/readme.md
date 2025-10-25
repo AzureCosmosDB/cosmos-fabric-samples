@@ -7,13 +7,13 @@ languages:
 products:
 - fabric
 name: |
-  Simple Query Samples for Cosmos DB in Microsoft Fabric
-urlFragment: simple-query-samples
+  Simple Query for Cosmos DB in Microsoft Fabric
+urlFragment: simple-query
 description: Learn Cosmos DB query operations in Microsoft Fabric: connect, authenticate, and perform CRUD operations on product data with reviews.
 ---
 -->
 
-# Simple Query Samples for Cosmos DB in Microosoft Fabric
+# Simple Query for Cosmos DB in Microsoft Fabric
 
 This sample demonstrates fundamental query operations in Cosmos DB using Microsoft Fabric. You'll learn how to connect, authenticate, and perform basic CRUD operations on a product catalog dataset with customer reviews.
 
@@ -85,7 +85,7 @@ This notebook uses the **SampleData** dataset which contains:
    ```
 
 2. **Import the notebook**:
-   - Navigate to the `simple-query-samples` folder
+   - Navigate to the `simple-query` folder
    - In your Fabric workspace, click **"Import"** → **"Notebook"**
    - Select and upload the `Simple Query Samples.ipynb` file
 
@@ -217,8 +217,8 @@ All database operations use async/await patterns for optimal performance in Fabr
 
 After completing this sample, consider exploring:
 
-- **Vector Search Samples** - AI-powered similarity search
-- **Management Tasks** - Creating indexes and containers and changing throughput
+- **Vector Search** - AI-powered similarity search
+- **Management Operations** - Creating indexes and containers and changing throughput
 
 ## 📚 Additional Resources
 
