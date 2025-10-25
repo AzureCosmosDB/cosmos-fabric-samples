@@ -23,15 +23,14 @@ New to Cosmos DB in Fabric? Start here:
 - [💡 Design Patterns](https://docs.microsoft.com/azure/cosmos-db/modeling-data)
 - [🔧 Cosmos Python API Reference](https://docs.microsoft.com/python/api/azure-cosmos/)
 
-## 📋 Table of Contents
-
-### 🔍 Query Samples
+## 📋 Samples
 
 | Sample | Description | Prerequisites | Difficulty |
 |--------|-------------|---------------|------------|
-| [Simple Query Samples](./simple-query-samples/) | Basic CRUD operations and queries using the sample dataset | SampleData container | Beginner |
-| [Vector Search Sample](./vector-search-sample/) | AI-powered semantic search using OpenAI embeddings and VectorDistance | SampleVectorData container | Intermediate |
-| [Management Operations Sample](./management-samples/) | Container management, throughput operations, and robust data loading with retry logic | Empty Cosmos DB artifact | Advanced |
+| [Simple Query](./simple-query/) | Basic CRUD operations and queries using the sample dataset | SampleData container | Beginner |
+| [Vector Search](./vector-search/) | AI-powered semantic search using OpenAI embeddings and VectorDistance | SampleVectorData container | Intermediate |
+| [Advanced Vector Search](./vector-search-advanced/) | Enterprise-grade vector search with Azure OpenAI deployment, Key Vault integration, and custom embedding models | Azure subscription owner rights, Workspace Identity | Expert |
+| [Management Operations](./management/) | Container management, throughput operations, and robust data loading with retry logic | Empty Cosmos DB artifact | Advanced |
 
 ### 📊 Datasets
 
@@ -44,9 +43,9 @@ New to Cosmos DB in Fabric? Start here:
 ### 🎯 Coming Soon
 
 - **Advanced Query Patterns** - Complex queries, aggregations, and joins
-- **Vector Search Samples** - AI-powered similarity search and RAG patterns  
+- **Hybrid Search Samples** - Combining vector and traditional search patterns  
 - **Real-time Analytics** - Stream processing and change feed examples
-- **Performance Optimization** - Indexing strategies and query tuning
+- **Multi-region Scenarios** - Global distribution and consistency patterns
 - **Integration Samples** - Connecting with other Fabric services
 
 ## 🛠️ Prerequisites
@@ -74,15 +73,23 @@ For developers with some Cosmos DB experience
 
 - Advanced querying techniques
 - Data modeling patterns
-- Performance optimization
+- AI integration with vector search
 
 ### 🔴 Advanced
 
 Complex scenarios and production patterns
 
-- Vector search and AI integration
-- Multi-region scenarios
+- Container management and lifecycle operations
+- Performance optimization and retry logic
 - Custom indexing strategies
+
+### ⚫ Expert
+
+Enterprise-grade implementations requiring significant Azure permissions
+
+- Multi-service Azure deployments
+- Advanced security patterns with Key Vault
+- Custom embedding models and optimizations
 
 ## 🤝 How to Use This Repository
 
