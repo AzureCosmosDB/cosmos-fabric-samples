@@ -135,7 +135,7 @@ Retrieves the newly created order document using point read.
 **Cell 11: Throughput Management (UPDATE)**  
 Updates container autoscale throughput settings for performance optimization.
 
-## � Key Concepts Demonstrated
+## 🔑 Key Concepts Demonstrated
 
 ### 1. Fabric Authentication
 ```python
