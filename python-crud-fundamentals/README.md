@@ -1,3 +1,17 @@
+<!--
+---
+page_type: sample
+languages:
+- python
+products:
+- fabric
+name: |
+  Python CRUD Fundamentals for Cosmos DB in Microsoft Fabric
+urlFragment: python-crud-fundamentals
+description: Learn fundamental CRUD operations on Cosmos DB in Fabric artifacts. Explore how to connect, authenticate, and perform essential tasks such as querying, point reads, container management, and document insertion.
+---
+-->
+
 # Python CRUD Fundamentals for Cosmos DB in Microsoft Fabric
 This sample demonstrates fundamental CRUD (Create, Read, Update, Delete) operations in Cosmos DB using Microsoft Fabric. You'll learn how to connect, authenticate, and perform essential database operations including querying, point reads, container management, and document insertion.
 
