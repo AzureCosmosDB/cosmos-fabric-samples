@@ -29,6 +29,7 @@ New to Cosmos DB in Fabric? Start here:
 |--------|-------------|---------------|------------|
 | [Simple Query](./simple-query/) | Basic CRUD operations and queries using the sample dataset | SampleData container | Beginner |
 | [Vector Search](./vector-search/) | AI-powered semantic search using OpenAI embeddings and VectorDistance | SampleVectorData container | Intermediate |
+| [Spark Analytics & Power BI](./spark-analytics-powerbi/) | Price-review correlation analysis using Spark SQL with Power BI dashboards | Cosmos DB with lakehouse shortcuts | Advanced |
 | [Advanced Vector Search](./vector-search-advanced/) | Enterprise-grade vector search with Azure OpenAI deployment, Key Vault integration, and custom embedding models | Azure subscription owner rights, Workspace Identity | Expert |
 | [Management Operations](./management/) | Container management, throughput operations, and robust data loading with retry logic | Empty Cosmos DB artifact | Advanced |
 
@@ -74,6 +75,7 @@ For developers with some Cosmos DB experience
 - Advanced querying techniques
 - Data modeling patterns
 - AI integration with vector search
+- SQL Analytics and Business Intelligence
 
 ### 🔴 Advanced
 
