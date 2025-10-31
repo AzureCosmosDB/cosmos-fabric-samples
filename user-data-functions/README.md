@@ -1,4 +1,4 @@
----
+<!--
 page_type: sample
 languages:
 - python
@@ -9,6 +9,7 @@ name: "Fabric User Data Functions for Cosmos DB"
 description: "Complete collection of Cosmos DB operations using Fabric User Data Functions - create, read, update, query, and vector search"
 urlFragment: "user-data-functions"
 ---
+-->
 
 # 🚀 Fabric User Data Functions for Cosmos DB
 
