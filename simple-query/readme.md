@@ -3,7 +3,6 @@
 page_type: sample
 languages:
 - python
-- nosql
 products:
 - fabric
 name: |

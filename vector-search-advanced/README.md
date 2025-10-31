@@ -5,8 +5,6 @@ languages:
 - python
 products:
 - fabric
-- azure-openai
-- azure-key-vault
 name: "Advanced Vector Search"
 description: "Enterprise-grade vector search with Azure OpenAI deployment, Key Vault integration, and custom embedding models for Cosmos DB in Fabric"
 urlFragment: "vector-search-advanced"
