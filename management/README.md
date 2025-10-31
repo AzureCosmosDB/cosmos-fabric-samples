@@ -9,31 +9,41 @@ products:
 name: |
   Management Operations for Cosmos DB in Microsoft Fabric
 urlFragment: management
-description: Learn container management operations in Cosmos DB using Microsoft Fabric: create containers with indexing/vector policies, manage throughput, and implement reliable data loading with retry logic.
+description: Learn container management operations in Cosmos DB using Microsoft Fabric with type-safe Python SDK usage, custom indexing and vector policies, throughput management, and robust data loading with retry logic.
 ---
 -->
 
 # Management Operations for Cosmos DB in Fabric
 
-This sample demonstrates **container management operations** in Cosmos DB using Microsoft Fabric. Learn how to programmatically create containers with custom policies, manage throughput settings, and implement robust data loading patterns with retry logic for production scenarios.
+This sample demonstrates **container management operations** in Cosmos DB using Microsoft Fabric with **type-safe Python SDK patterns**. Learn how to programmatically create containers with custom policies, manage throughput settings, and implement robust data loading patterns with proper error handling and retry logic for production scenarios.
 
 ## 📋 What You'll Learn
 
+- **Type-Safe Container Management** - Using proper type annotations for robust SDK interactions
 - **Container Creation** - How to create containers with custom indexing and vector policies
-- **Vector Index Configuration** - Setting up quantizedFlat vector indexes for AI scenarios
-- **Throughput Management** - Reading and updating autoscale throughput settings
+- **Vector Index Configuration** - Setting up quantizedFlat vector indexes for multiple AI scenarios
+- **Throughput Management** - Reading and updating autoscale throughput settings programmatically
 - **Robust Data Loading** - Implementing retry logic with 429 rate limiting handling
-- **Production Patterns** - Best practices for container management at scale
+- **Production Patterns** - Best practices for container management at scale with error handling
 
 ## 🏗️ Management Operations Covered
 
-### Container Management
+### Type-Safe Container Management
+
+| Operation | Type Annotations | Description |
+|-----------|-----------------|-------------|
+| **ContainerProxy** | `ContainerProxy` type hints | Proper SDK type safety for container operations |
+| **Indexing Policies** | `Dict[str, Any]` annotations | Type-safe policy configuration |
+| **Vector Policies** | `Dict[str, Any]` annotations | Structured vector embedding definitions |
+| **Error Handling** | Exception type checking | Robust error management patterns |
+
+### Container Operations
 
 | Operation | Description | Use Case |
 |-----------|-------------|----------|
-| **Create Container** | Create container with policies and throughput | Initial setup for new workloads |
-| **Vector Policies** | Configure vector embeddings and indexes | AI/ML applications with semantic search |
-| **Indexing Policies** | Define included/excluded paths | Performance optimization |
+| **Basic Container** | Create container with indexing policies | Standard document storage workloads |
+| **Vector Container** | Configure vector embeddings and indexes | AI/ML applications with semantic search |
+| **Multi-Vector Support** | Support for different embedding dimensions | Multiple AI models (OpenAI, Azure OpenAI) |
 | **Throughput Operations** | Read and modify autoscale settings | Scaling for changing workloads |
 
 ### Data Loading Operations
@@ -44,13 +54,30 @@ This sample demonstrates **container management operations** in Cosmos DB using 
 
 ## 🗂️ Sample Data & Configuration
 
-This notebook creates a new container and loads vector-enabled product data:
+This notebook demonstrates creating multiple containers with different configurations:
 
-- **Container Name** - `samplecontainer` (configurable)
+### Container 1: Basic Sample Data
+
+- **Container Name** - `SampleData`
 - **Partition Key** - `/categoryName` for optimal distribution
-- **Vector Configuration** - 1536-dimension cosine similarity for OpenAI Ada-002
-- **Indexing Policy** - Optimized for queries with vector exclusions
 - **Throughput** - Autoscale starting at 5000 RU/s
+- **Data Source** - Standard product catalog without vectors
+
+### Container 2: Vector-Enabled Data (OpenAI Ada-002)
+
+- **Container Name** - `SampleVectorData`
+- **Partition Key** - `/categoryName`
+- **Vector Configuration** - 1536-dimension cosine similarity for OpenAI Ada-002
+- **Throughput** - Autoscale starting at 5000 RU/s
+- **Data Source** - Product data with Ada-002 embeddings
+
+### Container 3: Vector-Enabled Data (Text-3-Large)
+
+- **Container Name** - `SampleVectorDataText3`
+- **Partition Key** - `/categoryName`
+- **Vector Configuration** - 512-dimension cosine similarity for Text-3-Large
+- **Throughput** - Autoscale starting at 1000 RU/s
+- **Data Source** - Product data with Text-3-Large embeddings
 
 ### Container Configuration Structure
 
@@ -133,11 +160,7 @@ indexing_policy = {
    - **Update `COSMOS_DATABASE_NAME`** to match your Cosmos DB artifact name
    - This is typically the same name you gave your Cosmos DB artifact when you created it
 
-3. **Verify container name** (optional):
-   - The default `COSMOS_CONTAINER_NAME = 'samplecontainer'` will work for most cases
-   - Change if you prefer a different container name
-
-4. **Install required packages**:
+3. **Install required packages**:
    - The notebook includes package installation cells
    - Run the first few cells to install dependencies
 
@@ -146,14 +169,13 @@ indexing_policy = {
 ```python
 COSMOS_ENDPOINT = 'https://my-cosmos-endpoint.cosmos.fabric.microsoft.com:443/'
 COSMOS_DATABASE_NAME = 'my-cosmos-artifact'
-COSMOS_CONTAINER_NAME = 'samplecontainer'
 ```
 
 ## 📖 Notebook Walkthrough
 
 ### Cell 1: Introduction and Overview
 
-Markdown cell explaining the management operations and sample features.
+Markdown cell explaining the management operations and sample features with type safety focus.
 
 ### Cell 2: Package Installation
 
@@ -163,62 +185,165 @@ Markdown cell explaining the management operations and sample features.
 
 Installs the Azure Cosmos DB Python SDK.
 
-### Cell 3: Imports and Configuration
+### Cell 3: Imports and Configuration with Type Safety
 
-Sets up imports and connection variables for your Cosmos DB instance.
+```python
+from typing import List, Dict, Any, Optional
+from azure.cosmos.aio import CosmosClient, ContainerProxy
+from azure.cosmos import PartitionKey, ThroughputProperties
+```
+
+Sets up type-safe imports and connection variables for your Cosmos DB instance.
 
 ### Cell 4: Authentication Setup
 
+```python
+%pip install azure-core
+class FabricTokenCredential(TokenCredential):
+    # Custom implementation for Fabric authentication
+```
 Implements `FabricTokenCredential` for seamless authentication in Microsoft Fabric.
 
-### Cell 5: Imports for Management Operations
+### Cell 5: Client Initialization
 
-Additional imports required for container management and data loading operations.
+```python
+COSMOS_CLIENT = CosmosClient(COSMOS_ENDPOINT, FabricTokenCredential())
+DATABASE = COSMOS_CLIENT.get_database_client(COSMOS_DATABASE_NAME)
+```
+Initializes the Cosmos DB client and database connection.
 
-### Cell 6: Container Creation Function
+### Cell 6: Data Loading Function with Retry Logic
 
-Demonstrates creating a container with vector and indexing policies, plus autoscale throughput.
-
-### Cell 7: Data Loading with Retry Logic
+```python
+async def load_data(url: str, container: ContainerProxy):
+    # Robust retry logic for 429 rate limiting
+```
 
 Shows robust data loading implementation with 429 rate limiting retry logic.
 
-### Cell 8: Throughput Management
+### Cell 7: Basic Container Creation
+```python
 
+async def create_container_basic(containerName: str, partitionKey: str, throughput: int):
+    indexing_policy: Dict[str, Any] = {
+        # Type-safe indexing policy configuration
+    }
+```
+
+Creates a basic container with proper type annotations and indexing policies.
+
+### Cell 8: Basic Container Usage
+
+Creates and loads the `SampleData` container with standard product data.
+
+### Cell 9: Vector Container Creation Function
+
+```python
+async def create_sample_vector_data_container(
+    containerName: str, partitionKey: str, throughput: int, dimensions: int):
+    vector_embedding_policy: Dict[str, Any] = {
+        # Type-safe vector policy configuration
+    }
+```
+
+Advanced container creation with vector embedding and indexing policies.
+
+### Cell 10: Vector Container Usage (Ada-002)
+
+Creates and loads the `SampleVectorData` container with 1536-dimension vectors.
+
+### Cell 11: Vector Container Usage (Text-3-Large)
+
+Creates and loads the `SampleVectorDataText3` container with 512-dimension vectors.
+
+### Cell 12: Throughput Management
+
+```python
+throughput_properties = await CONTAINER.get_throughput()
+autoscale_throughput = throughput_properties.auto_scale_max_throughput
+new_throughput = autoscale_throughput + 1000
+```
 Demonstrates reading current throughput and updating autoscale settings.
 
 ## 💡 Key Concepts Demonstrated
 
-### 1. Container Creation with Policies
+### 1. Type-Safe Container Creation with Policies
 
 ```python
-CONTAINER = await DATABASE.create_container_if_not_exists(
-    id=COSMOS_CONTAINER_NAME,
-    partition_key=PartitionKey(path='/categoryName', kind='Hash'),
-    indexing_policy=indexing_policy,
-    vector_embedding_policy=vector_embedding_policy,
-    offer_throughput=ThroughputProperties(auto_scale_max_throughput=5000)
-)
+async def create_container_basic(containerName: str, partitionKey: str, throughput: int):
+    indexing_policy: Dict[str, Any] = {
+        "includedPaths": [{"path": "/*"}],
+        "excludedPaths": [{"path": "/\"_etag\"/?"}]
+    }
+    
+    CONTAINER = await DATABASE.create_container_if_not_exists(
+        id=containerName,
+        partition_key=PartitionKey(path=partitionKey, kind='Hash'),
+        indexing_policy=indexing_policy,
+        offer_throughput=ThroughputProperties(auto_scale_max_throughput=throughput)
+    )
+    return CONTAINER
 ```
 
-### 2. Retry Logic for Rate Limiting
+### 2. Vector-Enabled Container with Type Safety
 
 ```python
-except CosmosHttpResponseError as e:
-    if e.status_code == 429:  # Rate limited
-        retry_after_ms = e.headers.get('x-ms-retry-after-ms', '1000')
-        retry_after_seconds = int(retry_after_ms) / 1000.0
-        await asyncio.sleep(retry_after_seconds)
+async def create_sample_vector_data_container(
+    containerName: str, partitionKey: str, throughput: int, dimensions: int):
+    
+    vector_embedding_policy: Dict[str, Any] = {
+        "vectorEmbeddings": [{
+            "path": "/vectors",
+            "dataType": "float32",
+            "distanceFunction": "cosine", 
+            "dimensions": dimensions
+        }]
+    }
+    
+    indexing_policy: Dict[str, Any] = {
+        "includedPaths": [{"path": "/*"}],
+        "excludedPaths": [
+            {"path": "/vectors/*"},
+            {"path": "/\"_etag\"/?"}
+        ],
+        "vectorIndexes": [{
+            "path": "/vectors",
+            "type": "quantizedFlat"
+        }]
+    }
 ```
 
-### 3. Throughput Management
+### 3. Robust Data Loading with Retry Logic
+
+```python
+async def load_data(url: str, container: ContainerProxy):
+    data = requests.get(url).json()
+    
+    for item in data:
+        retry_count = 0
+        max_retries = 5
+        
+        while retry_count <= max_retries:
+            try:
+                await container.create_item(item)
+                break
+            except CosmosHttpResponseError as e:
+                if e.status_code == 429:  # Rate limited
+                    retry_after_ms = e.headers.get('x-ms-retry-after-ms', '1000')
+                    retry_after_seconds = int(retry_after_ms) / 1000.0
+                    await asyncio.sleep(retry_after_seconds)
+                    retry_count += 1
+```
+
+### 4. Throughput Management Operations
 
 ```python
 # Read current throughput
 throughput_properties = await CONTAINER.get_throughput()
-current_aru = throughput_properties.auto_scale_max_throughput
+autoscale_throughput = throughput_properties.auto_scale_max_throughput
 
 # Update throughput
+new_throughput = autoscale_throughput + 1000
 await CONTAINER.replace_throughput(
     ThroughputProperties(auto_scale_max_throughput=new_throughput)
 )
@@ -229,21 +354,25 @@ await CONTAINER.replace_throughput(
 ### Common Issues
 
 **Container Creation Errors**
+
 - Ensure your Cosmos DB artifact exists and is accessible
 - Verify you have write permissions to the database
 - Check that container names follow Cosmos DB naming conventions
 
 **Data Loading Issues**
+
 - The retry logic handles 429 errors automatically
 - Large datasets may take time to load - this is normal
 - Monitor the console output for progress updates
 
 **Throughput Update Errors**
-- Autoscale minimum is 1000 RU/s, maximum is 1,000,000 RU/s
+
+- Autoscale minimum is 1000 RU/s, maximum is 50,000 RU/s (you can update this with a support ticket)
 - Throughput updates may take a few minutes to take effect
 - Ensure you have permissions to modify container settings
 
 **Vector Policy Errors**
+
 - Vector dimensions must match your embedding model (1536 for Ada-002)
 - Ensure vector paths are consistent with your data structure
 - QuantizedFlat is the recommended vector index type for most scenarios
@@ -251,18 +380,21 @@ await CONTAINER.replace_throughput(
 ## 🎯 Production Best Practices
 
 ### Container Design
+
 - **Plan partition keys** carefully for even distribution
 - **Use autoscale throughput** for variable workloads  
 - **Exclude vector paths** from general indexing for performance
 - **Test vector policies** with sample data before production
 
 ### Data Loading
+
 - **Implement retry logic** for 429 rate limiting scenarios
 - **Use batch operations** for large datasets when possible
 - **Monitor throughput consumption** during bulk operations
 - **Handle partial failures** gracefully with proper logging
 
 ### Throughput Management
+
 - **Start conservative** and scale up based on usage patterns
 - **Monitor RU consumption** to optimize throughput settings
 - **Use autoscale** for unpredictable traffic patterns
