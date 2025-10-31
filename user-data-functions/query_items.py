@@ -8,7 +8,7 @@ from azure.cosmos import exceptions
 
 @udf.generic_connection(argName="cosmosDb", audienceType="CosmosDB")
 @udf.function()
-def query_products(cosmosDb: fn.FabricItem, categoryName: str, productId: str, newPrice: float) -> list[dict[str, Any]]:
+def query_products(cosmosDb: fn.FabricItem, categoryName: str) -> list[dict[str, Any]]:
 
     '''
     Description: 
@@ -82,5 +82,5 @@ def query_products(cosmosDb: fn.FabricItem, categoryName: str, productId: str, n
         logging.error(f"Cosmos DB query failed: {e}")
         raise
     except exceptions as e:
-        logging.error(f"Unexpected error in search_products: {e}")
+        logging.error(f"Unexpected error in query_products: {e}")
         raise
