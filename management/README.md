@@ -5,6 +5,7 @@ languages:
 - python
 products:
 - fabric
+- fabric-database-cosmos-db
 name: |
   Management Operations for Cosmos DB in Microsoft Fabric
 urlFragment: management

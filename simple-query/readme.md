@@ -5,6 +5,7 @@ languages:
 - python
 products:
 - fabric
+- fabric-database-cosmos-db
 name: |
   Simple Query for Cosmos DB in Microsoft Fabric
 urlFragment: simple-query
