@@ -56,7 +56,7 @@ New to Cosmos DB in Fabric? Start here:
 Before running the samples, ensure you have:
 
 - **Microsoft Fabric workspace**
-- **Python 3.8+** for notebook samples
+- **Python 3.11+** for notebook samples
 - **Azure Cosmos SDK** (`pip install azure-cosmos`)
 - **Sample data loaded** in your Cosmos DB container (use Data Explorer)
 

@@ -6,6 +6,7 @@ languages:
 - python
 products:
 - fabric
+- fabric-database-cosmos-db
 name: "Spark Analytics and Power BI Dashboard"
 description: "Analyze price-review correlations using Spark SQL and create Power BI dashboards from Cosmos DB data via lakehouse shortcuts"
 urlFragment: "spark-analytics-powerbi"
