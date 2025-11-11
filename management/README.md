@@ -7,7 +7,7 @@ products:
 - fabric
 - fabric-database-cosmos-db
 name: |
-  Management Operations for Cosmos DB in Microsoft Fabric
+    Management Operations
 urlFragment: management
 description: Learn container management operations in Cosmos DB using Microsoft Fabric with type-safe Python SDK usage, custom indexing and vector policies, throughput management, and robust data loading with retry logic.
 ---

@@ -7,7 +7,7 @@ products:
 - fabric
 - fabric-database-cosmos-db
 name: |
-  Simple Query for Cosmos DB in Microsoft Fabric
+   Getting Started with Cosmos DB in Fabric
 urlFragment: simple-query
 description: Learn Cosmos DB query operations in Microsoft Fabric: connect, authenticate, and perform CRUD operations on product data with reviews.
 ---
