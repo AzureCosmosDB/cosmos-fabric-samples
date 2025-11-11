@@ -6,9 +6,10 @@ languages:
 products:
 - fabric
 - fabric-database-cosmos-db
-name: "Advanced Vector Search"
-description: "Enterprise-grade vector search with Azure OpenAI deployment, Key Vault integration, and custom embedding models for Cosmos DB in Fabric"
-urlFragment: "vector-search-advanced"
+name: |
+    Advanced Vector Search
+urlFragment: vector-search-advanced
+description: Enterprise-grade vector search with Azure OpenAI deployment, Key Vault integration, and custom embedding models for Cosmos DB in Fabric
 ---
 -->
 

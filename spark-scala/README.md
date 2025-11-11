@@ -6,9 +6,10 @@ languages:
 products:
 - fabric
 - fabric-database-cosmos-db
-name: "Work with Cosmos DB using Cosmos DB Spark Connector"
-description: "Use Spark and the Azure Cosmos DB Spark connector to read, query, analyze, and write data directly to Cosmos DB in Microsoft Fabric with Scala"
-urlFragment: "spark-connector-operations"
+name: |
+   Cosmos DB Spark Connector & Reverse ETL
+urlFragment: spark-scala
+description: Use Spark and the Azure Cosmos DB Spark connector to read, query, analyze, and write data directly to Cosmos DB in Microsoft Fabric with Scala.
 ---
 -->
 

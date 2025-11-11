@@ -27,13 +27,15 @@ New to Cosmos DB in Fabric? Start here:
 
 | Sample | Description | Prerequisites | Difficulty |
 |--------|-------------|---------------|------------|
-| [Simple Query](./simple-query/) | Basic CRUD operations and queries using the sample dataset | SampleData container | Beginner |
+| [Simple Query](./simple-query/) | Basic CRUD operations and queries using the sample dataset with basic container management | SampleData container | Beginner |
 | [User Data Functions](./user-data-functions/) | Complete collection of Cosmos DB operations using Fabric User Data Functions | SampleData container, User Data Functions enabled | Intermediate |
 | [Vector Search](./vector-search/) | AI-powered semantic search using OpenAI embeddings and VectorDistance | SampleVectorData container | Intermediate |
-| [Spark Analytics & Power BI](./spark-analytics-powerbi/) | Price-review correlation analysis using Spark SQL with Power BI dashboards | Cosmos DB with lakehouse shortcuts | Advanced |
-| [Spark Connector with Scala](./spark-scala/) | Read, query, analyze, and write data using Spark Connector with Scala | Custom Spark environment, JAR libraries | Advanced |
-| [Advanced Vector Search](./vector-search-advanced/) | Enterprise-grade vector search with Azure OpenAI deployment, Key Vault integration, and custom embedding models | Azure subscription owner rights, Workspace Identity | Expert |
-| [Management Operations](./management/) | Container management, throughput operations, and robust data loading with retry logic | Empty Cosmos DB artifact | Advanced |
+| [Price-Review Analytics with Spark](./price-reviews-spark/) | Price-review correlation analysis using Python Spark SQL with interactive visualizations | Cosmos DB with lakehouse shortcuts | Advanced |
+| [Price-Review Analytics with Power BI](./price-reviews-powerbi/) | Build Power BI dashboards analyzing price-review correlations using Lakehouse SQL views and DAX measures | Cosmos DB with lakehouse shortcuts, Power BI | Advanced |
+| [Spark Connector with Scala](./spark-scala/) | Read, query, analyze, and write data using Spark Connector with Scala | Custom Spark environment, JAR libraries | Intermediate |
+| [Advanced Vector Search](./vector-search-advanced/) | Enterprise-grade vector search with Azure OpenAI deployment, Key Vault integration, and custom embedding models | Azure subscription owner rights, Workspace Identity | Advanced |
+| [Disaster Recovery](./disaster-recovery/) | Business continuity and disaster recovery procedures using Git integration and OneLake mirroring to restore Cosmos DB artifacts | Git integration, OneLake shortcuts, Spark environment | Advanced |
+| [Management Operations](./management/) | Container management, throughput operations, and robust data loading with retry logic | Empty Cosmos DB artifact | Beginner |
 
 ### 📊 Datasets
 
@@ -48,7 +50,6 @@ New to Cosmos DB in Fabric? Start here:
 - **Advanced Query Patterns** - Complex queries, aggregations, and joins
 - **Hybrid Search Samples** - Combining vector and traditional search patterns  
 - **Real-time Analytics** - Stream processing and change feed examples
-- **Multi-region Scenarios** - Global distribution and consistency patterns
 - **Integration Samples** - Connecting with other Fabric services
 
 ## 🛠️ Prerequisites
@@ -60,48 +61,13 @@ Before running the samples, ensure you have:
 - **Azure Cosmos SDK** (`pip install azure-cosmos`)
 - **Sample data loaded** in your Cosmos DB container (use Data Explorer)
 
-## 💡 Sample Categories
-
-### 🟢 Beginner
-
-Perfect for those new to Cosmos DB in Fabric
-
-- Basic authentication and connection
-- Simple CRUD operations
-- Query fundamentals
-
-### 🟡 Intermediate
-
-For developers with some Cosmos DB experience
-
-- Advanced querying techniques
-- Data modeling patterns
-- AI integration with vector search
-- SQL Analytics and Business Intelligence
-
-### 🔴 Advanced
-
-Complex scenarios and production patterns
-
-- Container management and lifecycle operations
-- Performance optimization and retry logic
-- Custom indexing strategies
-
-### ⚫ Expert
-
-Enterprise-grade implementations requiring significant Azure permissions
-
-- Multi-service Azure deployments
-- Advanced security patterns with Key Vault
-- Custom embedding models and optimizations
-
 ## 🤝 How to Use This Repository
 
 1. **Browse the samples** using the table of contents above
 2. **Clone or download** the repository to your local machine
 3. **Follow the README** in each sample folder for specific instructions
 4. **Load the datasets** using Cosmos DB Data Explorer in Fabric
-5. **Run the notebooks** in your Fabric workspace or local Jupyter environment
+5. **Run the notebooks** in your Fabric workspace
 
 ## 🆘 Need Help?
 

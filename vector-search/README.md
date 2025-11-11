@@ -6,8 +6,8 @@ languages:
 products:
 - fabric
 - fabric-database-cosmos-db
-name: |
-  Vector Search for Cosmos DB in Microsoft Fabric
+name: | 
+   Vector Search
 urlFragment: vector-search
 description: Learn AI-powered vector search in Cosmos DB using Microsoft Fabric's built-in OpenAI text embedding models for semantic similarity searches.
 ---
