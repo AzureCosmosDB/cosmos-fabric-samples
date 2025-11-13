@@ -36,7 +36,7 @@
 -- 5. Open the semantic model to build relationships between views
 -- 6. Create DAX measures for your analysis in Power BI
 --
--- See the companion Power BI guide (powerbi-dax-guide.md) for detailed instructions
+-- See the companion Power BI guide (README.md) for detailed instructions
 
 -- Drop the view if it already exists
 IF OBJECT_ID('{SCHEMA_NAME}.vw_PriceReviewChanges', 'V') IS NOT NULL
