@@ -1,14 +1,80 @@
-# Project
+# Cosmos DB in Fabric - Samples Repository
 
-> This repo has been populated by an initial template to help get you started. Please
-> make sure to update the content to build a great experience for community-building.
+Welcome to the **Cosmos DB in Fabric Samples Repository**! 🌟
 
-As the maintainer of this project, please make a few updates:
+This repository serves as your comprehensive hub for learning and exploring Cosmos DB in Microsoft Fabric through practical, real-world samples. Whether you're just getting started or looking to implement advanced scenarios, you'll find code samples, datasets, and notebooks to accelerate your development journey.
 
-- Improving this README.MD file to provide a great experience
-- Updating SUPPORT.MD with content about this project's support experience
-- Understanding the security reporting process in SECURITY.MD
-- Remove this section from the README
+![Cosmos DB in Fabric Data Explorer](./media/cosmos-fabric-data-explorer.png)
+*The Cosmos DB in Fabric Data Explorer - where many of these samples begin*
+
+## 🚀 Quick Start
+
+New to Cosmos DB in Fabric? Start here:
+
+1. **Create a Cosmos DB artifact** in your Fabric workspace
+2. **Load sample data** using the Data Explorer (click "SampleData" on the Home screen)
+3. **Explore the samples** in this repository to learn key concepts and patterns
+
+## 📚 Documentation & Resources
+
+- [📖 Cosmos DB in Fabric Documentation](https://docs.microsoft.com/fabric/database/cosmos-db/overview)
+- [🎯 Getting Started Guide](https://docs.microsoft.com/fabric/database/cosmos-db/quickstart-portal)
+- [⚡ Performance Best Practices for Python](https://docs.microsoft.com/azure/cosmos-db/nosql/best-practice-python)
+- [💡 Design Patterns](https://docs.microsoft.com/azure/cosmos-db/modeling-data)
+- [🔧 Cosmos Python API Reference](https://docs.microsoft.com/python/api/azure-cosmos/)
+
+## 📋 Samples
+
+| Sample | Description | Prerequisites | Difficulty |
+|--------|-------------|---------------|------------|
+| [Simple Query](./simple-query/) | Basic CRUD operations and queries using the sample dataset with basic container management | SampleData container | Beginner |
+| [User Data Functions](./user-data-functions/) | Complete collection of Cosmos DB operations using Fabric User Data Functions | SampleData container, User Data Functions enabled | Intermediate |
+| [Vector Search](./vector-search/) | AI-powered semantic search using OpenAI embeddings and VectorDistance | SampleVectorData container | Intermediate |
+| [Price-Review Analytics with Spark](./price-reviews-spark/) | Price-review correlation analysis using Python Spark SQL with interactive visualizations | Cosmos DB with lakehouse shortcuts | Advanced |
+| [Price-Review Analytics with Power BI](./price-reviews-powerbi/) | Build Power BI dashboards analyzing price-review correlations using Lakehouse SQL views and DAX measures | Cosmos DB with lakehouse shortcuts, Power BI | Advanced |
+| [Spark Connector with Scala](./spark-scala/) | Read, query, analyze, and write data using Spark Connector with Scala | Custom Spark environment, JAR libraries | Intermediate |
+| [Advanced Vector Search](./vector-search-advanced/) | Enterprise-grade vector search with Azure OpenAI deployment, Key Vault integration, and custom embedding models | Azure subscription owner rights, Workspace Identity | Advanced |
+| [Disaster Recovery](./disaster-recovery/) | Business continuity and disaster recovery procedures using Git integration and OneLake mirroring to restore Cosmos DB artifacts | Git integration, OneLake shortcuts, Spark environment | Advanced |
+| [Management Operations](./management/) | Container management, throughput operations, and robust data loading with retry logic | Empty Cosmos DB artifact | Beginner |
+
+### 📊 Datasets
+
+| Dataset | Description | Use Case |
+|---------|-------------|----------|
+| [fabricSampleData.json](./datasets/fabricSampleData.json) | Product catalog with customer reviews | Basic queries and operations |
+| [fabricSampleDataVectors-ada-002-1536.json](./datasets/fabricSampleDataVectors-ada-002-1536.json) | Sample data with Ada-002 embeddings (1536 dimensions) | Vector search scenarios |
+| [fabricSampleDataVectors-3-large-512.json](./datasets/fabricSampleDataVectors-3-large-512.json) | Sample data with text-embedding-3-large vectors (512 dimensions) | Advanced vector operations with Azure OpenAI |
+
+### 🎯 Coming Soon
+
+- **Advanced Query Patterns** - Complex queries, aggregations, and joins
+- **Hybrid Search Samples** - Combining vector and traditional search patterns  
+- **Real-time Analytics** - Stream processing and change feed examples
+- **Integration Samples** - Connecting with other Fabric services
+
+## 🛠️ Prerequisites
+
+Before running the samples, ensure you have:
+
+- **Microsoft Fabric workspace**
+- **Python 3.11+** for notebook samples
+- **Azure Cosmos SDK** (`pip install azure-cosmos`)
+- **Sample data loaded** in your Cosmos DB container (use Data Explorer)
+
+## 🤝 How to Use This Repository
+
+1. **Browse the samples** using the table of contents above
+2. **Clone or download** the repository to your local machine
+3. **Follow the README** in each sample folder for specific instructions
+4. **Load the datasets** using Cosmos DB Data Explorer in Fabric
+5. **Run the notebooks** in your Fabric workspace
+
+## 🆘 Need Help?
+
+- 📖 Check the [documentation links](#-documentation--resources) above
+- 🐛 Report issues using [GitHub Issues](../../issues)
+- 💬 Ask questions in [GitHub Discussions](../../discussions)
+- 📧 See [SUPPORT.md](./SUPPORT.md) for additional support options
 
 ## Contributing
 
