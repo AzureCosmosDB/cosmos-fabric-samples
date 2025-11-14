@@ -34,6 +34,7 @@ New to Cosmos DB in Fabric? Start here:
 | [Price-Review Analytics with Power BI](./price-reviews-powerbi/) | Build Power BI dashboards analyzing price-review correlations using Lakehouse SQL views and DAX measures | Cosmos DB with lakehouse shortcuts, Power BI | Advanced |
 | [Spark Connector with Scala](./spark-scala/) | Read, query, analyze, and write data using Spark Connector with Scala | Custom Spark environment, JAR libraries | Intermediate |
 | [Advanced Vector Search](./vector-search-advanced/) | Enterprise-grade vector search with Azure OpenAI deployment, Key Vault integration, and custom embedding models | Azure subscription owner rights, Workspace Identity | Advanced |
+| [Fraud Detection](./fraud-detection/) | Real-time credit card fraud detection using vector search, change feed streaming, and anomaly detection with embeddings | Cosmos DB with vector index, Spark environment, JAR libraries | Advanced |
 | [Disaster Recovery](./disaster-recovery/) | Business continuity and disaster recovery procedures using Git integration and OneLake mirroring to restore Cosmos DB artifacts | Git integration, OneLake shortcuts, Spark environment | Advanced |
 | [Management Operations](./management/) | Container management, throughput operations, and robust data loading with retry logic | Empty Cosmos DB artifact | Beginner |
 
