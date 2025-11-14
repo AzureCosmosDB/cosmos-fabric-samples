@@ -658,6 +658,305 @@ def embed_text_cached(text: str) -> np.ndarray:
     return embed_text(text)
 ```
 
+## 📊 Power BI Administrative Dashboard - Unlock Cards
+
+After cards are automatically locked by the fraud detection system, administrators need a way to review and unlock legitimate cards. This section shows how to build a **Power BI report** that allows unlocking cards directly from a visual interface.
+
+### **Overview**
+
+The Power BI dashboard provides:
+
+- **Live view** of all credit cards with their lock status
+- **One-click unlock** functionality using Fabric User Data Functions
+- **Row-level security** through Fabric permissions
+- **DirectQuery** for real-time data visibility
+
+### **Step 1: Create Fabric User Data Function**
+
+1. **Create a new User Data Function** in your Fabric workspace
+2. Name it appropriately (e.g., `CreditCardFunctions`)
+3. **Paste the following code**:
+
+```python
+from datetime import datetime, timezone
+import logging
+import fabric.functions as fn
+from fabric.functions.cosmosdb import get_cosmos_client
+from azure.cosmos import exceptions
+
+udf = fn.UserDataFunctions()
+
+COSMOS_DB_URI = "<your-cosmos-endpoint>"  # Same endpoint from notebooks
+DB_NAME = "<your-database-name>"  # Same database from notebooks
+CARDS_CONTAINER_NAME = "CreditCards"
+
+@udf.generic_connection(argName="cosmosDb", audienceType="CosmosDB")
+@udf.function()
+def unlockcard(cosmosDb: fn.FabricItem, cardid: str, pk: str, comment: str) -> str:
+    """
+    Unlocks a credit card by patching its status to 'active'
+    
+    Args:
+        cosmosDb: Fabric connection to Cosmos DB
+        cardid: Card ID (document id)
+        pk: Partition key (customer_id)
+        comment: Optional comment for unlock reason
+    
+    Returns:
+        'ok' on success, error message on failure
+    """
+    try:
+        client = get_cosmos_client(cosmosDb, COSMOS_DB_URI)
+        db = client.get_database_client(DB_NAME)
+        container = db.get_container_client(CARDS_CONTAINER_NAME)
+
+        iso_now = datetime.now(timezone.utc).isoformat().replace("+00:00", "Z")
+
+        ops = [
+            {"op": "set", "path": "/status", "value": "active"},
+            {"op": "set", "path": "/last_updated", "value": iso_now},
+            {"op": "set", "path": "/last_lock_reason",
+             "value": (comment.strip() if comment and comment.strip() else None)}
+        ]
+
+        container.patch_item(
+            item=cardid,
+            partition_key=pk,
+            patch_operations=ops
+        )
+        return "ok"
+
+    except Exception as e:
+        logging.error(f"Unexpected error: {e}")
+        return f"error: {e}"
+```
+
+4. **Publish the Function Set**
+
+> **⚠️ IMPORTANT**: Do NOT bind a Cosmos connection in the UDF settings → connections tab. The `@generic_connection` decorator handles this automatically.
+
+### **Step 2: Build Power BI Report**
+
+#### **2.1 Connect to Cosmos DB**
+
+1. Open **Power BI Desktop**
+2. **Get Data** → **Azure Cosmos DB (Fabric)**
+3. Select your database and **CreditCards** container
+4. Choose **DirectQuery** mode (for real-time updates)
+
+#### **2.2 Create Card Management Table**
+
+1. **Insert a Table visual**:
+   - In Power BI Desktop, go to the **Visualizations pane**
+   - Click the **Table** icon to add a table visual to your report canvas
+   - Resize the table to an appropriate size for viewing multiple cards
+
+2. **Add columns to the table**:
+   - In the **Data pane** (right side), expand the **CreditCards** table
+   - **Drag and drop** the following fields into the **Columns** well of the table visual:
+     - `card_id` - Credit card identifier
+     - `customer_id` - Customer identifier (partition key)
+     - `card_number` - Masked card number
+     - `status` - Current lock status (locked/active)
+     - `last_lock_reason` - Reason for last lock
+     - `last_updated` - Last status change timestamp
+   
+   > **💡 TIP**: You can reorder columns by dragging them up or down in the Columns well, or by dragging the column headers in the visual itself.
+
+3. **Format the table** *(OPTIONAL but recommended)*:
+   - Select the table visual
+   - In the **Format pane**, expand **Style presets** and choose a style
+   - Enable **Column headers** to make them stand out
+   - Adjust **Text size** for better readability
+   - Enable **Specific column** formatting to highlight the `status` column with conditional formatting (red for "locked", green for "active")
+
+**Recommended filters** *(OPTIONAL)*:
+
+- **Filter locked cards**: In the **Filters pane**, drag `status` field to **Filters on this visual**, then check only "locked" to show only locked cards by default
+- **Add slicers for search**: Insert **Slicer** visuals for `customer_id` or `card_id` to allow quick filtering of specific cards
+
+#### **2.3 Create DAX Measures**
+
+Create three new measures for button parameters:
+
+```DAX
+SelectedCardId = SELECTEDVALUE('CreditCards'[card_id])
+SelectedPK     = SELECTEDVALUE('CreditCards'[customer_id])
+CommentText    = "Unlocked by administrator via Power BI"
+```
+
+> **📝 NOTE**: These measures only work when a **single row is selected**. If no row is selected, the button will show "Waiting for required parameters".
+
+#### **2.4 Add Unlock Button**
+
+1. **Insert** → **Button** → **Blank**
+2. **Format** → **Button** → **Style** → **Title** *(OPTIONAL but recommended)*
+   - Set title text: `"Unlock Card"`
+   - Customize colors/fonts as desired
+3. **Format** → **Button** → **Action**
+   - **Type**: Data function
+   - **Workspace**: Your Fabric workspace
+   - **Function Set**: Name of your UDF set (e.g., `CreditCardFunctions`)
+   - **Data function**: `unlockcard`
+4. **Map parameters**:
+
+   | Parameter | Assign |
+   |-----------|--------|
+   | `cardid` | Measure → `SelectedCardId` |
+   | `pk` | Measure → `SelectedPK` |
+   | `comment` | Measure → `CommentText` |
+
+### **Step 3: Test in Desktop**
+
+1. **Select a locked card** in the table (click the row)
+2. Verify the row is highlighted
+3. Click **Unlock Card** button
+4. You should see a success notification
+5. Wait 1-2 seconds for DirectQuery refresh
+6. The table should update to show `status = "active"`
+
+### **Step 4: Publish to Fabric Service**
+
+#### **4.1 Publish Report**
+
+1. **Power BI Desktop** → **Home** → **Publish**
+2. Select your Fabric workspace
+3. Wait for publish to complete
+
+#### **4.2 Configure Dataset Credentials (Required!)**
+
+In the Fabric workspace:
+
+1. Open the **dataset** (not the report)
+2. Go to **Settings**
+3. Expand **Data source credentials**
+4. For Cosmos DB connection:
+   - **Authentication**: OAuth2
+   - Click **Sign in** with your Fabric account
+5. Ensure the dataset owner has these permissions:
+   - **Fabric Contributor** role on the workspace
+   - **Cosmos DB Built-in Data Contributor** role
+
+> **🔒 Security Note**: Without proper credentials, the unlock button will not work in the service, even if it worked in Desktop.
+
+### **Step 5: Validate End-to-End**
+
+1. Open the published report in Fabric
+2. **Select a locked card** from the table
+3. Click **Unlock Card**
+4. Wait 1-2 seconds
+5. Click **Refresh visuals** if needed
+6. Confirm the update in:
+   - Power BI visual
+   - Fabric Data Explorer
+   - Cosmos DB Studio
+
+### **Testing the Complete Workflow**
+
+To test the full fraud detection → unlock workflow:
+
+1. **Run fraud detection** (Notebook 3) in the background
+2. **Insert a fraudulent transaction** (Notebook 2)
+   ```python
+   # Trigger fraud - luxury purchase in unusual location
+   doc = {
+       "id": str(uuid.uuid4()),
+       "type": "transaction",
+       "card_id": "C0050",
+       "customer_id": "U0050",
+       "merchant": "Rolex",
+       "location": "Thailand",
+       "amount": 9500.00,
+       "timestamp": datetime.now(timezone.utc).isoformat()
+   }
+   pending_txns_container.create_item(doc)
+   ```
+3. **Observe automatic lock** in fraud detection output
+4. **Refresh Power BI report** to see newly locked card
+5. **Review transaction** and determine it's legitimate
+6. **Click Unlock Card** to restore access
+7. **Verify card status** changes to active
+
+### **Dashboard Enhancements** *(OPTIONAL)*
+
+Consider adding these features to your Power BI report:
+
+#### **Additional Visuals** *(OPTIONAL)*
+
+- **Card lock summary** - Count of locked vs active cards
+- **Lock timeline** - Line chart showing locks over time
+- **Top fraud merchants** - Bar chart of merchants triggering most locks
+- **Geographic heatmap** - Map showing fraud locations
+- **Customer risk score** - Calculate fraud frequency per customer
+
+#### **Advanced Features** *(OPTIONAL)*
+
+- **Bulk unlock** - Multi-select rows and unlock multiple cards
+- **Lock notes** - Add custom comments when unlocking
+- **Audit trail** - Log all unlock operations to separate container
+- **Email notifications** - Alert customers when cards are unlocked
+- **Review queue** - Categorize locks as fraud/false positive for ML training
+
+#### **Sample DAX for Analytics** *(OPTIONAL)*
+
+```DAX
+// Total locked cards
+LockedCardCount = 
+CALCULATE(
+    COUNTROWS('CreditCards'),
+    'CreditCards'[status] = "locked"
+)
+
+// Cards locked in last 24 hours
+RecentLocks = 
+CALCULATE(
+    COUNTROWS('CreditCards'),
+    'CreditCards'[status] = "locked",
+    'CreditCards'[last_updated] >= NOW() - 1
+)
+
+// Fraud detection accuracy (requires manual labeling)
+FalsePositiveRate = 
+DIVIDE(
+    COUNTROWS(FILTER('CreditCards', 'CreditCards'[manual_review] = "false_positive")),
+    COUNTROWS(FILTER('CreditCards', 'CreditCards'[status] = "locked"))
+)
+```
+
+### **Troubleshooting**
+
+#### **Button doesn't run**
+- **Cause**: No row selected, or multiple rows selected
+- **Solution**: Click exactly one row in the table before clicking unlock
+
+#### **"Waiting for required parameters" message**
+- **Cause**: DAX measures returning blank values
+- **Solution**: Ensure a single row is selected; verify measure definitions
+
+#### **Function doesn't appear in dropdown**
+- **Cause**: UDF not published or wrong workspace
+- **Solution**: Verify UDF is in same workspace; check Function Set is published
+
+#### **Patch operation fails**
+- **Cause**: Wrong partition key or missing permissions
+- **Solution**: Verify `customer_id` is correct partition key; check dataset credentials
+
+#### **DirectQuery refresh delays**
+- **Cause**: Cosmos DB query latency or large dataset
+- **Solution**: Add manual refresh button; consider scheduled refresh; optimize table filters
+
+#### **Dataset credentials not configured**
+- **Cause**: OAuth2 not signed in after publish
+- **Solution**: Go to dataset settings → data source credentials → sign in with proper permissions
+
+### **Security Considerations**
+
+- **Row-level security**: Implement RLS in Power BI to restrict which cards users can see/unlock
+- **Audit logging**: Create a separate `UnlockAuditLog` container to track all unlock operations
+- **Approval workflow**: Require manager approval for high-value card unlocks
+- **Time-based locks**: Automatically re-lock cards if no activity after unlock
+- **MFA requirement**: Require multi-factor authentication for Power BI access
+
 ## 🔄 Next Steps
 
 After completing this sample, explore:
@@ -666,7 +965,7 @@ After completing this sample, explore:
 - **Advanced ML Models** - Replace statistical detection with trained models (isolation forest, autoencoders)
 - **Multi-Factor Fraud Scores** - Combine vector similarity with velocity checks, geolocation, device fingerprinting
 - **Customer Notifications** - Integrate with email/SMS services for fraud alerts
-- **Administrative Dashboard** - Build Power BI reports for fraud monitoring and card management
+- **Administrative Dashboard** - Expand the Power BI unlock dashboard with analytics and bulk operations
 - **A/B Testing** - Compare detection algorithms and tune parameters based on real fraud cases
 
 ## 📚 Additional Resources
