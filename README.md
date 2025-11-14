@@ -48,9 +48,7 @@ New to Cosmos DB in Fabric? Start here:
 
 ### 🎯 Coming Soon
 
-- **Advanced Query Patterns** - Complex queries, aggregations, and joins
 - **Hybrid Search Samples** - Combining vector and traditional search patterns  
-- **Real-time Analytics** - Stream processing and change feed examples
 - **Integration Samples** - Connecting with other Fabric services
 
 ## 🛠️ Prerequisites
