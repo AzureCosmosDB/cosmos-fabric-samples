@@ -19,6 +19,8 @@ Detect anomalous credit card transactions in real-time using vector embeddings, 
 
 This sample demonstrates an end-to-end fraud detection system using **Azure Cosmos DB in Microsoft Fabric** with **vector search capabilities**, **change feed streaming**, and **OpenAI embeddings**. The system analyzes transaction patterns by combining merchant, location, and amount signals into semantic vectors, then detects anomalies by comparing new transactions against historical spending patterns using vector similarity.
 
+![Fraud Detection Dashboard](./media/fraud-detection-pbi.png)
+
 > **🎯 Key Innovation**: This sample uses **vector-based anomaly detection** with **card-scoped historical patterns** and **dynamic thresholds**, avoiding static rules by learning each card's unique spending behavior through semantic embeddings.
 
 ## 🎯 What You'll Learn
@@ -62,6 +64,7 @@ You'll need **three containers** in your Cosmos DB database:
 1. **CCTransactions** - Stores historical credit card transactions with vector embeddings
    - Partition key: `/card_id`
    - Vector index configuration:
+
      ```json
      {
        "path": "/embedding",
@@ -73,6 +76,7 @@ You'll need **three containers** in your Cosmos DB database:
        "vectorIndexShardKey": ["/card_id"]
      }
      ```
+
    - Data type: float32 arrays
 
 2. **CreditCards** - Stores credit card details and lock status
@@ -155,8 +159,8 @@ Create a **Spark Environment** with the following JAR libraries:
 1. Navigate to the `fraud-detection` folder in this repository
 2. Download all three notebooks:
    - `1-data-generator.ipynb` - Generate synthetic transaction data
-   - `2-new-transactions.ipynb` - Add pending transactions for testing
-   - `3-fraud-detection.ipynb` - Real-time fraud detection engine
+   - `2-fraud-detection.ipynb` - Real-time fraud detection engine
+   - `3-new-transactions.ipynb` - Add pending transactions for testing
 
 **Import into Fabric:**
 
@@ -191,9 +195,9 @@ Execute the notebooks in sequence:
 4. **Expected runtime**: 15-30 minutes (depending on OpenAI API rate limits)
 5. **Result**: ~7,000-10,000 historical transactions with vector embeddings
 
-#### Part 2: Start Real-Time Fraud Detection (3-fraud-detection.ipynb)
+#### Part 2: Start Real-Time Fraud Detection (2-fraud-detection.ipynb)
 
-1. Open `3-fraud-detection.ipynb`
+1. Open `2-fraud-detection.ipynb`
 2. Update configuration values to match Part 1
 3. Review the fraud detection logic explanation
 4. Execute cells up to the streaming query start
@@ -204,15 +208,15 @@ Execute the notebooks in sequence:
    - Automatically locks cards when fraud is detected
 6. **Leave this notebook running** - it will process transactions in real-time
 
-#### Part 3: Test with New Transactions (2-new-transactions.ipynb)
+#### Part 3: Test with New Transactions (3-new-transactions.ipynb)
 
-1. Open `2-new-transactions.ipynb` (while Part 2 is still running)
+1. Open `3-new-transactions.ipynb` (while Part 2 is still running)
 2. Update configuration values to match Parts 1 and 2
 3. Choose one of the test patterns:
    - **Continuous testing**: Run the loop that generates 5 transactions every 60 seconds
    - **Manual testing**: Use the manual cell to insert specific transactions
 4. **Watch the fraud detection in action**:
-   - Check the output in `3-fraud-detection.ipynb` for fraud alerts
+   - Check the output in `2-fraud-detection.ipynb` for fraud alerts
    - Query CreditCards container to see locked cards
    - Observe how the system distinguishes normal vs anomalous transactions
 
@@ -285,7 +289,7 @@ Execute the notebooks in sequence:
                               ↓
 ┌─────────────────────────────────────────────────────────────────┐
 │              2. Real-Time Fraud Detection Engine                │
-│  (3-fraud-detection.ipynb - Spark Streaming)                    │
+│  (2-fraud-detection.ipynb - Spark Streaming)                    │
 │                                                                 │
 │  ┌─────────────────┐    Change Feed     ┌──────────────────┐    │
 │  │ Pending         │ ──────────────────→│ Spark Structured │    │
@@ -319,7 +323,7 @@ Execute the notebooks in sequence:
                               ↑
 ┌─────────────────────────────────────────────────────────────────┐
 │              3. Test Transaction Injection                      │
-│  (2-new-transactions.ipynb)                                     │
+│  (3-new-transactions.ipynb)                                     │
 │                                                                 │
 │  • Generate new pending transactions                            │
 │  • Insert into PendingCCTransactions container                  │
@@ -446,7 +450,7 @@ patch_operations = [
 
 ### **Tuning Parameters**
 
-Adjust these values in `3-fraud-detection.ipynb` to control sensitivity:
+Adjust these values in `2-fraud-detection.ipynb` to control sensitivity:
 
 | Parameter | Default | Effect | When to Increase | When to Decrease |
 |-----------|---------|--------|------------------|------------------|
