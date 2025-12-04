@@ -843,6 +843,11 @@ In the Fabric workspace:
 
 > **🔒 Security Note**: Without proper credentials, the unlock button will not work in the service, even if it worked in Desktop.
 
+#### Report Visuals ####
+The report should look similar to the example below. The exact appearance may vary based on the selected styles and the columns you choose to display:
+<img width="2020" height="1070" alt="image" src="https://github.com/user-attachments/assets/c71989d4-dcb0-43d6-bdb9-8054be316417" />
+
+
 ### **Step 5: Validate End-to-End**
 
 1. Open the published report in Fabric
