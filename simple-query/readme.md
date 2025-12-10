@@ -9,7 +9,8 @@ products:
 name: |
    Getting Started with Cosmos DB in Fabric
 urlFragment: simple-query
-description: Learn Cosmos DB query operations in Microsoft Fabric: connect, authenticate, and perform CRUD operations on product data with reviews.
+description: |
+  Learn Cosmos DB query operations in Microsoft Fabric: connect, authenticate, and perform CRUD operations on product data with reviews.
 ---
 -->
 
